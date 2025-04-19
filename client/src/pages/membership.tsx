@@ -65,7 +65,7 @@ const Membership = () => {
   };
 
   return (
-    <div className="py-32 bg-secondary min-h-screen">
+    <div className="py-32 bg-[#0c0c0c] min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -301,7 +301,7 @@ const Membership = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .membership-card {
           transition: all 0.3s ease;
           transform-style: preserve-3d;

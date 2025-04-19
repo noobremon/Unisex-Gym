@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <section id="home" className="relative h-screen pt-20 flex items-center">
       {/* Background with overlay */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-secondary/80 to-secondary/80">
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#0c0c0c]/95 to-[#0c0c0c]/95">
         <img 
           src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&h=800&q=80"
           alt="Gym interior with equipment" 

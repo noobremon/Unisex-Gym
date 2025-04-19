@@ -34,11 +34,14 @@ const Navbar = () => {
     }
     return location === path;
   };
-  
-  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+
+  const handleNavigation = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
     if (href.startsWith("/#") && location !== "/") {
       e.preventDefault();
-      window.location.href = href;
+      window.location.assign(href); // More compatible way to navigate
     }
   };
 
@@ -110,7 +113,10 @@ const Navbar = () => {
                   ? "text-primary"
                   : "text-neutral hover:text-primary"
               }`}
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => {
+                setIsMobileMenuOpen(false);
+                handleNavigation(e, link.href);
+              }}
             >
               {link.name}
             </Link>

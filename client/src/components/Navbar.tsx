@@ -23,9 +23,9 @@ const Navbar = () => {
     { name: "Home", href: "/" },
     { name: "Membership", href: "/membership" },
     { name: "Classes", href: "/booking" },
-    { name: "Trainers", href: "/#trainers" },
-    { name: "Facilities", href: "/#facilities" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Trainers", href: "/trainers" },
+    { name: "Facilities", href: "/facilities" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const isActive = (path: string) => {

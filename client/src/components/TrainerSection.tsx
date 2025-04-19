@@ -64,9 +64,9 @@ const TrainerSection = () => {
               className="trainer-card rounded-xl overflow-hidden shadow-xl"
             >
               <div className="relative h-80">
-                <img 
-                  src={trainer.image} 
-                  alt={`${trainer.name} - ${trainer.speciality}`} 
+                <img
+                  src={`/images/${trainer.image}`}
+                  alt={`${trainer.name} - ${trainer.speciality}`}
                   className="w-full h-full object-cover"
                 />
                 <div className="trainer-overlay absolute inset-0 flex flex-col justify-end p-6">

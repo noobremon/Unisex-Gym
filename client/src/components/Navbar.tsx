@@ -41,7 +41,7 @@ const Navbar = () => {
   ) => {
     if (href.startsWith("/#") && location !== "/") {
       e.preventDefault();
-      window.location.assign(href); // More compatible way to navigate
+      window.location.href = href;
     }
   };
 

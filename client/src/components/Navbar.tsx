@@ -29,9 +29,6 @@ const Navbar = () => {
   ];
 
   const isActive = (path: string) => {
-    if (path.startsWith("/#")) {
-      return location === "/";
-    }
     return location === path;
   };
 
@@ -49,7 +46,7 @@ const Navbar = () => {
         }
       } else {
         // Store the target section in sessionStorage
-        sessionStorage.setItem('scrollTarget', elementId);
+        sessionStorage.setItem("scrollTarget", elementId);
         // Navigate to home page
         window.location.href = "/";
       }
@@ -58,13 +55,13 @@ const Navbar = () => {
 
   useEffect(() => {
     // Check if there's a stored scroll target when component mounts
-    const scrollTarget = sessionStorage.getItem('scrollTarget');
+    const scrollTarget = sessionStorage.getItem("scrollTarget");
     if (scrollTarget && location === "/") {
       setTimeout(() => {
         const element = document.getElementById(scrollTarget);
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
-          sessionStorage.removeItem('scrollTarget');
+          sessionStorage.removeItem("scrollTarget");
         }
       }, 100);
     }

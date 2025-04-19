@@ -81,15 +81,15 @@ const Navbar = () => {
       <div className={`md:hidden bg-secondary bg-opacity-95 pb-4 ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {navLinks.map((link) => (
-            <Link key={link.name} href={link.href}>
-              <a 
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  isActive(link.href) ? 'text-primary' : 'text-neutral hover:text-primary'
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </a>
+            <Link 
+              key={link.name} 
+              href={link.href}
+              className={`block px-3 py-2 rounded-md text-base font-medium ${
+                isActive(link.href) ? 'text-primary' : 'text-neutral hover:text-primary'
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
             </Link>
           ))}
           <Button 
@@ -101,7 +101,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .nav-link {
           position: relative;
         }

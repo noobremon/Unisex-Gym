@@ -10,11 +10,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
           <div>
             <div className="mb-6">
-              <Link href="/">
-                <a className="font-bebas text-3xl text-primary">
-                  <FaDumbbell className="inline-block mr-2" />
-                  FLEXFIT
-                </a>
+              <Link href="/" className="font-bebas text-3xl text-primary flex items-center">
+                <FaDumbbell className="inline-block mr-2" />
+                FLEXFIT
               </Link>
             </div>
             <p className="text-neutral/70 mb-6">
@@ -40,33 +38,33 @@ const Footer = () => {
             <h3 className="text-xl font-montserrat font-bold text-neutral mb-6">Quick Links</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/">
-                  <a className="text-neutral/70 hover:text-primary transition-colors">Home</a>
+                <Link href="/" className="text-neutral/70 hover:text-primary transition-colors">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link href="/membership">
-                  <a className="text-neutral/70 hover:text-primary transition-colors">Membership</a>
+                <Link href="/membership" className="text-neutral/70 hover:text-primary transition-colors">
+                  Membership
                 </Link>
               </li>
               <li>
-                <Link href="/booking">
-                  <a className="text-neutral/70 hover:text-primary transition-colors">Classes</a>
+                <Link href="/booking" className="text-neutral/70 hover:text-primary transition-colors">
+                  Classes
                 </Link>
               </li>
               <li>
-                <Link href="/#trainers">
-                  <a className="text-neutral/70 hover:text-primary transition-colors">Trainers</a>
+                <Link href="/#trainers" className="text-neutral/70 hover:text-primary transition-colors">
+                  Trainers
                 </Link>
               </li>
               <li>
-                <Link href="/#facilities">
-                  <a className="text-neutral/70 hover:text-primary transition-colors">Facilities</a>
+                <Link href="/#facilities" className="text-neutral/70 hover:text-primary transition-colors">
+                  Facilities
                 </Link>
               </li>
               <li>
-                <Link href="/#contact">
-                  <a className="text-neutral/70 hover:text-primary transition-colors">Contact</a>
+                <Link href="/#contact" className="text-neutral/70 hover:text-primary transition-colors">
+                  Contact
                 </Link>
               </li>
             </ul>

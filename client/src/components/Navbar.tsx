@@ -48,10 +48,27 @@ const Navbar = () => {
           element.scrollIntoView({ behavior: "smooth" });
         }
       } else {
-        window.location.href = `/#${elementId}`;
+        // Store the target section in sessionStorage
+        sessionStorage.setItem('scrollTarget', elementId);
+        // Navigate to home page
+        window.location.href = "/";
       }
     }
   };
+
+  useEffect(() => {
+    // Check if there's a stored scroll target when component mounts
+    const scrollTarget = sessionStorage.getItem('scrollTarget');
+    if (scrollTarget && location === "/") {
+      setTimeout(() => {
+        const element = document.getElementById(scrollTarget);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          sessionStorage.removeItem('scrollTarget');
+        }
+      }, 100);
+    }
+  }, [location]);
 
   return (
     <nav

@@ -10,7 +10,7 @@ const FacilitySection = () => {
 
   if (isLoading) {
     return (
-      <section id="facilities" className="py-20 bg-secondary">
+      <section id="facilities" className="py-20 bg-[#0c0c0c]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
@@ -27,7 +27,7 @@ const FacilitySection = () => {
 
   if (error) {
     return (
-      <section id="facilities" className="py-20 bg-secondary">
+      <section id="facilities" className="py-20 bg-[#0c0c0c]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
@@ -43,7 +43,7 @@ const FacilitySection = () => {
   }
 
   return (
-    <section id="facilities" className="py-20 bg-secondary relative overflow-hidden">
+    <section id="facilities" className="py-20 bg-[#0c0c0c] relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
@@ -110,7 +110,7 @@ const FacilitySection = () => {
         </motion.div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .facility-item {
           transition: all 0.3s ease;
         }

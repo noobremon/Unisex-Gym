@@ -1,4 +1,5 @@
 import { pgTable, text, serial, integer, timestamp, boolean } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -144,3 +145,55 @@ export const registerMembershipSchema = z.object({
   userId: z.number(),
   planId: z.number()
 });
+
+// Define table relations
+export const usersRelations = relations(users, ({ many }) => ({
+  bookings: many(bookings),
+  membershipRegistrations: many(membershipRegistrations)
+}));
+
+export const membershipPlansRelations = relations(membershipPlans, ({ many }) => ({
+  registrations: many(membershipRegistrations)
+}));
+
+export const trainersRelations = relations(trainers, ({ many }) => ({
+  classes: many(gymClasses)
+}));
+
+export const gymClassesRelations = relations(gymClasses, ({ one, many }) => ({
+  trainer: one(trainers, {
+    fields: [gymClasses.trainerId],
+    references: [trainers.id]
+  }),
+  schedules: many(classSchedules)
+}));
+
+export const classSchedulesRelations = relations(classSchedules, ({ one, many }) => ({
+  class: one(gymClasses, {
+    fields: [classSchedules.classId],
+    references: [gymClasses.id]
+  }),
+  bookings: many(bookings)
+}));
+
+export const bookingsRelations = relations(bookings, ({ one }) => ({
+  user: one(users, {
+    fields: [bookings.userId],
+    references: [users.id]
+  }),
+  schedule: one(classSchedules, {
+    fields: [bookings.scheduleId],
+    references: [classSchedules.id]
+  })
+}));
+
+export const membershipRegistrationsRelations = relations(membershipRegistrations, ({ one }) => ({
+  user: one(users, {
+    fields: [membershipRegistrations.userId],
+    references: [users.id]
+  }),
+  plan: one(membershipPlans, {
+    fields: [membershipRegistrations.planId],
+    references: [membershipPlans.id]
+  })
+}));

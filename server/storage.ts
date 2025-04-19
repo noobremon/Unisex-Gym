@@ -4,8 +4,12 @@ import {
   ClassSchedule, InsertClassSchedule, Facility, InsertFacility, 
   Testimonial, InsertTestimonial, Booking, InsertBooking, 
   MembershipRegistration, InsertMembershipRegistration, 
-  ContactMessage, InsertContactMessage 
+  ContactMessage, InsertContactMessage,
+  users, membershipPlans, trainers, gymClasses, classSchedules,
+  facilities, testimonials, bookings, membershipRegistrations, contactMessages
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 // Define the storage interface with all required CRUD operations
 export interface IStorage {
@@ -544,4 +548,211 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Implement database storage
+export class DatabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+  
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+  
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
+    return user;
+  }
+  
+  // Membership Plans methods
+  async getMembershipPlans(): Promise<MembershipPlan[]> {
+    return db.select().from(membershipPlans);
+  }
+  
+  async getMembershipPlan(id: number): Promise<MembershipPlan | undefined> {
+    const [plan] = await db.select().from(membershipPlans).where(eq(membershipPlans.id, id));
+    return plan || undefined;
+  }
+  
+  async createMembershipPlan(plan: InsertMembershipPlan): Promise<MembershipPlan> {
+    const [newPlan] = await db
+      .insert(membershipPlans)
+      .values(plan)
+      .returning();
+    return newPlan;
+  }
+  
+  // Trainers methods
+  async getTrainers(): Promise<Trainer[]> {
+    return db.select().from(trainers);
+  }
+  
+  async getTrainer(id: number): Promise<Trainer | undefined> {
+    const [trainer] = await db.select().from(trainers).where(eq(trainers.id, id));
+    return trainer || undefined;
+  }
+  
+  async createTrainer(trainer: InsertTrainer): Promise<Trainer> {
+    const [newTrainer] = await db
+      .insert(trainers)
+      .values(trainer)
+      .returning();
+    return newTrainer;
+  }
+  
+  // Gym Classes methods
+  async getGymClasses(): Promise<GymClass[]> {
+    return db.select().from(gymClasses);
+  }
+  
+  async getGymClass(id: number): Promise<GymClass | undefined> {
+    const [gymClass] = await db.select().from(gymClasses).where(eq(gymClasses.id, id));
+    return gymClass || undefined;
+  }
+  
+  async createGymClass(gymClass: InsertGymClass): Promise<GymClass> {
+    const [newGymClass] = await db
+      .insert(gymClasses)
+      .values(gymClass)
+      .returning();
+    return newGymClass;
+  }
+  
+  // Class Schedules methods
+  async getClassSchedules(): Promise<ClassSchedule[]> {
+    return db.select().from(classSchedules);
+  }
+  
+  async getClassSchedulesByDay(day: string): Promise<ClassSchedule[]> {
+    return db.select().from(classSchedules).where(eq(classSchedules.dayOfWeek, day));
+  }
+  
+  async getClassSchedule(id: number): Promise<ClassSchedule | undefined> {
+    const [schedule] = await db.select().from(classSchedules).where(eq(classSchedules.id, id));
+    return schedule || undefined;
+  }
+  
+  async createClassSchedule(schedule: InsertClassSchedule): Promise<ClassSchedule> {
+    const [newSchedule] = await db
+      .insert(classSchedules)
+      .values(schedule)
+      .returning();
+    return newSchedule;
+  }
+  
+  async updateClassSchedule(id: number, scheduleUpdate: Partial<ClassSchedule>): Promise<ClassSchedule | undefined> {
+    const [updatedSchedule] = await db
+      .update(classSchedules)
+      .set(scheduleUpdate)
+      .where(eq(classSchedules.id, id))
+      .returning();
+    return updatedSchedule || undefined;
+  }
+  
+  // Facilities methods
+  async getFacilities(): Promise<Facility[]> {
+    return db.select().from(facilities);
+  }
+  
+  async getFacility(id: number): Promise<Facility | undefined> {
+    const [facility] = await db.select().from(facilities).where(eq(facilities.id, id));
+    return facility || undefined;
+  }
+  
+  async createFacility(facility: InsertFacility): Promise<Facility> {
+    const [newFacility] = await db
+      .insert(facilities)
+      .values(facility)
+      .returning();
+    return newFacility;
+  }
+  
+  // Testimonials methods
+  async getTestimonials(): Promise<Testimonial[]> {
+    return db.select().from(testimonials);
+  }
+  
+  async getTestimonial(id: number): Promise<Testimonial | undefined> {
+    const [testimonial] = await db.select().from(testimonials).where(eq(testimonials.id, id));
+    return testimonial || undefined;
+  }
+  
+  async createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial> {
+    const [newTestimonial] = await db
+      .insert(testimonials)
+      .values(testimonial)
+      .returning();
+    return newTestimonial;
+  }
+  
+  // Bookings methods
+  async getBookings(): Promise<Booking[]> {
+    return db.select().from(bookings);
+  }
+  
+  async getBookingsByUser(userId: number): Promise<Booking[]> {
+    return db.select().from(bookings).where(eq(bookings.userId, userId));
+  }
+  
+  async getBooking(id: number): Promise<Booking | undefined> {
+    const [booking] = await db.select().from(bookings).where(eq(bookings.id, id));
+    return booking || undefined;
+  }
+  
+  async createBooking(booking: InsertBooking): Promise<Booking> {
+    const [newBooking] = await db
+      .insert(bookings)
+      .values(booking)
+      .returning();
+    return newBooking;
+  }
+  
+  // Membership Registrations methods
+  async getMembershipRegistrations(): Promise<MembershipRegistration[]> {
+    return db.select().from(membershipRegistrations);
+  }
+  
+  async getMembershipRegistrationsByUser(userId: number): Promise<MembershipRegistration[]> {
+    return db.select().from(membershipRegistrations).where(eq(membershipRegistrations.userId, userId));
+  }
+  
+  async getMembershipRegistration(id: number): Promise<MembershipRegistration | undefined> {
+    const [registration] = await db.select().from(membershipRegistrations).where(eq(membershipRegistrations.id, id));
+    return registration || undefined;
+  }
+  
+  async createMembershipRegistration(registration: InsertMembershipRegistration): Promise<MembershipRegistration> {
+    const [newRegistration] = await db
+      .insert(membershipRegistrations)
+      .values(registration)
+      .returning();
+    return newRegistration;
+  }
+  
+  // Contact Messages methods
+  async getContactMessages(): Promise<ContactMessage[]> {
+    return db.select().from(contactMessages);
+  }
+  
+  async getContactMessage(id: number): Promise<ContactMessage | undefined> {
+    const [message] = await db.select().from(contactMessages).where(eq(contactMessages.id, id));
+    return message || undefined;
+  }
+  
+  async createContactMessage(message: InsertContactMessage): Promise<ContactMessage> {
+    const createdAt = new Date();
+    const [newMessage] = await db
+      .insert(contactMessages)
+      .values({ ...message, createdAt })
+      .returning();
+    return newMessage;
+  }
+}
+
+// Use the database storage
+export const storage = new DatabaseStorage();

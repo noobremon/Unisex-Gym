@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { FaDumbbell } from "react-icons/fa";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed w-full bg-secondary z-50 ${isScrolled ? 'bg-opacity-95 shadow-lg' : 'bg-opacity-70'} transition-all duration-300`}>
+    <nav className={`fixed w-full bg-[#0c0c0c] dark:bg-[#0c0c0c] z-50 ${isScrolled ? 'bg-opacity-95 shadow-lg' : 'bg-opacity-70'} transition-all duration-300`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex-shrink-0 flex items-center">
@@ -46,7 +47,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
               <Link 
                 key={link.name} 
@@ -56,13 +57,15 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <ThemeToggle />
             <Button variant="default" className="bg-primary hover:bg-primary/90 text-white ml-4">
               Join Now
             </Button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-neutral hover:text-primary focus:outline-none"
@@ -78,7 +81,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu */}
-      <div className={`md:hidden bg-secondary bg-opacity-95 pb-4 ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
+      <div className={`md:hidden bg-[#0c0c0c] dark:bg-[#0c0c0c] bg-opacity-95 pb-4 ${isMobileMenuOpen ? 'block' : 'hidden'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {navLinks.map((link) => (
             <Link 

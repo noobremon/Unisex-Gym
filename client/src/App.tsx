@@ -1,6 +1,7 @@
 import { Switch, Route } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "next-themes";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Booking from "@/pages/booking";
@@ -21,14 +22,16 @@ function Router() {
 
 function App() {
   return (
-    <TooltipProvider>
-      <Toaster />
-      <div className="font-inter bg-secondary text-neutral overflow-x-hidden">
-        <Navbar />
-        <Router />
-        <Footer />
-      </div>
-    </TooltipProvider>
+    <ThemeProvider defaultTheme="dark" enableSystem={true}>
+      <TooltipProvider>
+        <Toaster />
+        <div className="font-inter bg-[#0c0c0c] dark:bg-[#0c0c0c] text-neutral overflow-x-hidden min-h-screen">
+          <Navbar />
+          <Router />
+          <Footer />
+        </div>
+      </TooltipProvider>
+    </ThemeProvider>
   );
 }
 

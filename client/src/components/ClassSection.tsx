@@ -73,7 +73,7 @@ const ClassSection = () => {
   };
   
   return (
-    <section id="classes" className="py-20 bg-secondary relative overflow-hidden">
+    <section id="classes" className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c] relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
       <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-blue-500/5 rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
       
@@ -209,7 +209,7 @@ const ClassSection = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .class-card {
           transition: all 0.3s ease;
         }

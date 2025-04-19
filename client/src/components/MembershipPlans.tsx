@@ -52,7 +52,7 @@ const MembershipPlans = () => {
 
   if (isLoading) {
     return (
-      <section id="membership" className="py-20 bg-dark">
+      <section id="membership" className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
@@ -69,7 +69,7 @@ const MembershipPlans = () => {
 
   if (error) {
     return (
-      <section id="membership" className="py-20 bg-dark">
+      <section id="membership" className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
@@ -85,7 +85,7 @@ const MembershipPlans = () => {
   }
 
   return (
-    <section id="membership" className="py-20 bg-[#121212]">
+    <section id="membership" className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
@@ -153,7 +153,7 @@ const MembershipPlans = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .membership-card {
           transition: all 0.3s ease;
           transform-style: preserve-3d;

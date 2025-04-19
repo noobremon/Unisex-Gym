@@ -48,13 +48,7 @@ const Navbar = () => {
           element.scrollIntoView({ behavior: "smooth" });
         }
       } else {
-        window.location.href = `/${elementId}`;
-        setTimeout(() => {
-          const element = document.getElementById(elementId);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
-        }, 100);
+        window.location.href = `/#${elementId}`;
       }
     }
   };

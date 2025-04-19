@@ -1,9 +1,8 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaDumbbell } from 'react-icons/fa';
+import { FaDumbbell, FaRunning, FaBiking, FaHeartbeat } from 'react-icons/fa';
 
-// This is a simplified version of the gym scene that doesn't use Three.js
-// We'll use this as a placeholder until the 3D issues are resolved
 const GymScene: React.FC = () => {
   return (
     <div className="w-full h-full rounded-xl overflow-hidden bg-gray-900 flex items-center justify-center p-6">
@@ -13,28 +12,43 @@ const GymScene: React.FC = () => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.div
-          className="mx-auto bg-primary/20 w-20 h-20 rounded-full flex items-center justify-center mb-4"
-          animate={{ 
-            scale: [1, 1.05, 1],
-            rotate: [0, 5, 0, -5, 0] 
-          }}
-          transition={{ 
-            repeat: Infinity, 
-            duration: 3,
-            ease: "easeInOut" 
-          }}
-        >
-          <FaDumbbell className="text-primary text-4xl" />
-        </motion.div>
-        <h3 className="text-xl md:text-2xl font-bebas text-primary tracking-wide">FLEXFIT GYM</h3>
-        <p className="text-neutral/80 mt-2">Interactive 3D Gym View Loading...</p>
-        <div className="mt-4 flex justify-center space-x-2">
-          {[1, 2, 3, 4, 5].map((index) => (
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          {[
+            { icon: FaDumbbell, label: "Strength" },
+            { icon: FaRunning, label: "Cardio" },
+            { icon: FaBiking, label: "Cycling" },
+            { icon: FaHeartbeat, label: "Fitness" }
+          ].map((item, index) => (
+            <motion.div
+              key={index}
+              className="bg-primary/10 p-4 rounded-lg"
+              animate={{ 
+                scale: [1, 1.05, 1],
+                rotate: [0, 5, 0, -5, 0] 
+              }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 3,
+                delay: index * 0.2,
+                ease: "easeInOut" 
+              }}
+            >
+              <item.icon className="text-primary text-3xl mx-auto mb-2" />
+              <p className="text-neutral/80 text-sm">{item.label}</p>
+            </motion.div>
+          ))}
+        </div>
+        <h3 className="text-xl md:text-2xl font-bebas text-primary tracking-wide mb-3">FLEXFIT GYM</h3>
+        <p className="text-neutral/80 mt-2 mb-4">Interactive 3D Gym View Loading...</p>
+        <div className="flex justify-center space-x-2">
+          {[1, 2, 3].map((index) => (
             <motion.div
               key={index}
               className="w-2 h-2 rounded-full bg-primary"
-              animate={{ scale: [1, 1.5, 1] }}
+              animate={{ 
+                scale: [1, 1.5, 1],
+                opacity: [0.5, 1, 0.5]
+              }}
               transition={{
                 repeat: Infinity,
                 duration: 1,

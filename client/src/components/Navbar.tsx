@@ -39,9 +39,17 @@ const Navbar = () => {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
-    if (href.startsWith("/#") && location !== "/") {
+    if (href.startsWith("/#")) {
       e.preventDefault();
-      window.location.href = href;
+      if (location !== "/") {
+        window.location.href = href;
+      } else {
+        const elementId = href.substring(2);
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
     }
   };
 

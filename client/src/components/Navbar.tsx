@@ -41,14 +41,20 @@ const Navbar = () => {
   ) => {
     if (href.startsWith("/#")) {
       e.preventDefault();
-      if (location !== "/") {
-        window.location.href = href;
-      } else {
-        const elementId = href.substring(2);
+      const elementId = href.substring(2);
+      if (location === "/") {
         const element = document.getElementById(elementId);
         if (element) {
           element.scrollIntoView({ behavior: "smooth" });
         }
+      } else {
+        window.location.href = `/${elementId}`;
+        setTimeout(() => {
+          const element = document.getElementById(elementId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
       }
     }
   };

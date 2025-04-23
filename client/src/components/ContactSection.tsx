@@ -176,7 +176,7 @@ const ContactSection = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-neutral font-medium">Address</p>
-                    <p className="text-neutral/80">123 Fitness Avenue, Cityville, CA 90210</p>
+                    <p className="text-neutral/80">Dum Dum Road, Opp - South Dumdum Municipality, Kolkata - 700074</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -185,7 +185,7 @@ const ContactSection = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-neutral font-medium">Phone</p>
-                    <p className="text-neutral/80">(555) 123-4567</p>
+                    <p className="text-neutral/80">6969696969</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -194,7 +194,7 @@ const ContactSection = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-neutral font-medium">Email</p>
-                    <p className="text-neutral/80">info@flexfitgym.com</p>
+                    <p className="text-neutral/80">rajuuuraju03@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -203,8 +203,8 @@ const ContactSection = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-neutral font-medium">Hours</p>
-                    <p className="text-neutral/80">Monday - Friday: 5am - 11pm</p>
-                    <p className="text-neutral/80">Saturday - Sunday: 7am - 8pm</p>
+                    <p className="text-neutral/80">Monday - Friday: 7:30am - 11pm</p>
+                    <p className="text-neutral/80">Saturday - Sunday: 8am - 10:30pm</p>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,3 @@
-import { Facility } from '@shared/schema';
 import { motion } from 'framer-motion';
 import { FaPlay } from 'react-icons/fa';
 
@@ -91,8 +90,8 @@ const FacilitySection = () => {
             </div>
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-dark to-transparent">
-            <h3 className="text-2xl font-montserrat font-bold text-neutral mb-2">Take a 3D Tour of Our Gym</h3>
-            <p className="text-neutral/80">Explore our state-of-the-art facilities in an immersive virtual tour.</p>
+            <h3 className="text-2xl font-montserrat font-bold text-neutral mb-2"></h3>
+            <p className="text-neutral/80"></p>
           </div>
         </motion.div>
       </div>

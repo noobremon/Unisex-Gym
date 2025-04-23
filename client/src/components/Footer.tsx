@@ -12,11 +12,11 @@ const Footer = () => {
             <div className="mb-6">
               <Link href="/" className="font-bebas text-3xl text-primary flex items-center">
                 <FaDumbbell className="inline-block mr-2" />
-                FLEXFIT
+                MAXIMUS
               </Link>
             </div>
             <p className="text-neutral/70 mb-6">
-              Transform your body and mind with our state-of-the-art facilities and expert trainers. Join the FlexFit family today!
+              Transform your body and mind with our state-of-the-art facilities and expert trainers. Join the MAXIMUS family today!
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-neutral/70 hover:text-primary transition-colors">
@@ -118,7 +118,7 @@ const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-gray-800 text-center">
-          <p className="text-neutral/50">&copy; {new Date().getFullYear()} FlexFit Gym. All rights reserved.</p>
+          <p className="text-neutral/50">&copy; {new Date().getFullYear()} MAXIMUS Gym. All rights reserved.</p>
         </div>
       </div>
     </footer>

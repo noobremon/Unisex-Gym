@@ -9,7 +9,7 @@ const TestimonialSection = () => {
       id: 1,
       name: 'Emily R.',
       image: 'https://randomuser.me/api/portraits/women/44.jpg',
-      testimonial: 'Joining FlexFit Gym was the best decision I made for my health. The trainers are amazing!',
+      testimonial: 'Joining Maximus Gym was the best decision I made for my health. The trainers are amazing!',
       rating: 5,
       achievement: 'Lost 20 lbs',
       duration: '6 months',

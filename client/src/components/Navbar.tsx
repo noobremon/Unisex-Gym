@@ -21,10 +21,12 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "/" },
-    { name: "Membership", href: "/membership" },
+    
     { name: "Classes", href: "/classes" },
     { name: "Trainers", href: "/trainers" },
     { name: "Facilities", href: "/facilities" },
+    { name: "Membership", href: "/membership" },
+    
     { name: "Contact", href: "/contact" },
   ];
 
@@ -79,7 +81,7 @@ const Navbar = () => {
               className="font-bebas text-3xl text-primary flex items-center"
             >
               <FaDumbbell className="inline-block mr-2" />
-              FLEXFIT
+              MAXIMUS
             </Link>
           </div>
 

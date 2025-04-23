@@ -206,7 +206,7 @@ const Membership = () => {
               <CardHeader>
                 <CardTitle>Membership Benefits</CardTitle>
                 <CardDescription>
-                  Discover all the exclusive benefits included with your FlexFit membership
+                  Discover all the exclusive benefits included with your MAXIMUS membership
                 </CardDescription>
               </CardHeader>
               <CardContent>

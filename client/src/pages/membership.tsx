@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { MembershipPlan } from '@shared/schema';
 import { useToast } from "@/hooks/use-toast";
@@ -18,6 +18,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Membership = () => {
   const { toast } = useToast();
+  const [planType, setPlanType] = useState<'monthly' | 'yearly'>('monthly');
+  const [tab, setTab] = useState<'plans' | 'benefits'>('plans');
 
   // Scroll to the top when the component mounts
   useEffect(() => {
@@ -25,11 +27,11 @@ const Membership = () => {
   }, []);
 
   // --- MOCK DATA ---
-  const mockMembershipPlans = [
+  const mockMembershipPlansMonthly = [
     {
       id: 1,
       name: 'Basic Plan',
-      price: 29,
+      price: 999,
       features: [
         'Access to gym equipment',
         'Locker room access',
@@ -43,7 +45,7 @@ const Membership = () => {
     {
       id: 2,
       name: 'Premium Plan',
-      price: 59,
+      price: 1999,
       features: [
         'All Basic features',
         'Unlimited group classes',
@@ -57,7 +59,7 @@ const Membership = () => {
     {
       id: 3,
       name: 'Elite Plan',
-      price: 99,
+      price: 3499,
       features: [
         'All Premium features',
         'Private locker',
@@ -70,19 +72,61 @@ const Membership = () => {
     },
   ];
 
-  const membershipPlans = mockMembershipPlans;
+  const mockMembershipPlansYearly = [
+    {
+      id: 1,
+      name: 'Basic Plan',
+      price: 9999,
+      features: [
+        'Access to gym equipment',
+        'Locker room access',
+        '1 group class per week',
+        'Standard support',
+        'No personal trainer',
+      ],
+      icon: 'fa-dumbbell',
+      popular: false,
+    },
+    {
+      id: 2,
+      name: 'Premium Plan',
+      price: 18999,
+      features: [
+        'All Basic features',
+        'Unlimited group classes',
+        'Sauna access',
+        'Priority support',
+        '5 personal trainer sessions',
+      ],
+      icon: 'fa-crown',
+      popular: true,
+    },
+    {
+      id: 3,
+      name: 'Elite Plan',
+      price: 32999,
+      features: [
+        'All Premium features',
+        'Private locker',
+        'Nutrition consultation',
+        'Unlimited personal trainer',
+        'VIP events',
+      ],
+      icon: 'fa-gem',
+      popular: false,
+    },
+  ];
+
+  const membershipPlans = planType === 'monthly' ? mockMembershipPlansMonthly : mockMembershipPlansYearly;
   const isLoading = false;
   const error = false;
 
   const handleSelectPlan = async (planId: number) => {
     try {
-      // In a real app, we would get the userId from auth context
-      // This is just for demonstration as we don't have auth implemented
       await apiRequest('POST', '/api/membership-registration', { 
         userId: 1, // Mock user ID
         planId: planId 
       });
-      
       toast({
         title: "Plan selected!",
         description: "Your membership has been registered successfully.",
@@ -126,193 +170,110 @@ const Membership = () => {
             Select a plan that fits your lifestyle and fitness goals. All memberships include access to our state-of-the-art facilities.
           </p>
         </motion.div>
-
-        <Tabs defaultValue="plans" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="plans">Membership Plans</TabsTrigger>
-            <TabsTrigger value="benefits">Membership Benefits</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="plans">
-            {isLoading ? (
-              <div className="text-center py-10">
-                <p className="text-neutral">Loading membership plans...</p>
-              </div>
-            ) : error ? (
-              <div className="text-center py-10">
-                <p className="text-red-500">Error loading membership plans. Please try again later.</p>
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-3 gap-8">
-                {membershipPlans.map((plan, index) => (
-                  <motion.div
-                    key={plan.id}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    className={`membership-card rounded-xl overflow-hidden ${
-                      plan.popular
-                        ? 'bg-secondary border-2 border-primary shadow-2xl transform -translate-y-4'
-                        : 'bg-secondary border border-gray-800 shadow-xl'
-                    }`}
+        {/* Tabs for Plans/Benefits */}
+        <div className="flex justify-center mb-8 gap-4">
+          <button
+            className={`px-6 py-2 rounded-lg font-semibold border border-primary focus:outline-none transition-colors duration-200 ${tab === 'plans' ? 'bg-primary text-white' : 'bg-transparent text-primary'}`}
+            onClick={() => setTab('plans')}
+          >
+            Membership Plans
+          </button>
+          <button
+            className={`px-6 py-2 rounded-lg font-semibold border border-primary focus:outline-none transition-colors duration-200 ${tab === 'benefits' ? 'bg-primary text-white' : 'bg-transparent text-primary'}`}
+            onClick={() => setTab('benefits')}
+          >
+            Membership Benefits
+          </button>
+        </div>
+        {/* Plan Type Toggle - only show if on Plans tab */}
+        {tab === 'plans' && (
+          <div className="flex justify-center mb-8">
+            <button
+              className={`px-6 py-2 rounded-l-lg font-semibold border border-primary focus:outline-none transition-colors duration-200 ${planType === 'monthly' ? 'bg-primary text-white' : 'bg-transparent text-primary'}`}
+              onClick={() => setPlanType('monthly')}
+            >
+              Monthly Plan
+            </button>
+            <button
+              className={`px-6 py-2 rounded-r-lg font-semibold border border-primary focus:outline-none transition-colors duration-200 ${planType === 'yearly' ? 'bg-primary text-white' : 'bg-transparent text-primary'}`}
+              onClick={() => setPlanType('yearly')}
+            >
+              Yearly Plan
+            </button>
+          </div>
+        )}
+        {/* Plans Grid or Benefits */}
+        {tab === 'plans' ? (
+          <div className="grid md:grid-cols-3 gap-8">
+            {membershipPlans.map((plan, index) => (
+              <motion.div
+                key={plan.id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className={`membership-card rounded-xl overflow-hidden ${
+                  plan.popular
+                    ? 'bg-secondary border-2 border-primary shadow-2xl transform -translate-y-4'
+                    : 'bg-secondary border border-gray-800 shadow-xl'
+                }`}
+              >
+                {plan.popular && (
+                  <div className="w-full bg-primary py-2">
+                    <p className="text-center font-montserrat font-medium text-neutral">Most Popular</p>
+                  </div>
+                )}
+                <CardContent className="p-8">
+                  <div className={`w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full ${
+                    plan.name === 'Elite Plan' ? 'bg-blue-500/10' : 'bg-primary/10'
+                  }`}>
+                    {getIcon(plan.icon)}
+                  </div>
+                  <h3 className="text-2xl font-montserrat font-bold text-neutral text-center mb-2">{plan.name}</h3>
+                  <div className="flex justify-center items-baseline my-6">
+                    <span className="font-bebas text-5xl text-neutral">₹{plan.price}</span>
+                    <span className="text-neutral/70 ml-1">/{planType === 'monthly' ? 'month' : 'year'}</span>
+                  </div>
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className={`flex items-center ${i >= plan.features.length - (plan.name === 'Basic Plan' ? 2 : plan.name === 'Premium Plan' ? 1 : 0) ? 'opacity-50' : ''}`}>
+                        {i >= plan.features.length - (plan.name === 'Basic Plan' ? 2 : plan.name === 'Premium Plan' ? 1 : 0) ? (
+                          <FaTimes className="text-red-500 mr-3" />
+                        ) : (
+                          <FaCheck className="text-green-500 mr-3" />
+                        )}
+                        <span className="text-neutral/80">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button 
+                    className={`w-full py-6 ${
+                      plan.name === 'Elite Plan' 
+                        ? 'bg-blue-500 hover:bg-blue-500/90' 
+                        : 'bg-primary hover:bg-primary/90'
+                    } text-neutral font-montserrat font-medium transition-all`}
+                    onClick={() => handleSelectPlan(plan.id)}
                   >
-                    {plan.popular && (
-                      <div className="w-full bg-primary py-2">
-                        <p className="text-center font-montserrat font-medium text-neutral">Most Popular</p>
-                      </div>
-                    )}
-                    <CardContent className="p-8">
-                      <div className={`w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full ${
-                        plan.name === 'Elite Plan' ? 'bg-blue-500/10' : 'bg-primary/10'
-                      }`}>
-                        {getIcon(plan.icon)}
-                      </div>
-                      <h3 className="text-2xl font-montserrat font-bold text-neutral text-center mb-2">{plan.name}</h3>
-                      <div className="flex justify-center items-baseline my-6">
-                        <span className="font-bebas text-5xl text-neutral">${plan.price}</span>
-                        <span className="text-neutral/70 ml-1">/month</span>
-                      </div>
-                      <ul className="space-y-4 mb-8">
-                        {plan.features.map((feature, i) => (
-                          <li key={i} className={`flex items-center ${i >= plan.features.length - (plan.name === 'Basic Plan' ? 2 : plan.name === 'Premium Plan' ? 1 : 0) ? 'opacity-50' : ''}`}>
-                            {i >= plan.features.length - (plan.name === 'Basic Plan' ? 2 : plan.name === 'Premium Plan' ? 1 : 0) ? (
-                              <FaTimes className="text-red-500 mr-3" />
-                            ) : (
-                              <FaCheck className="text-green-500 mr-3" />
-                            )}
-                            <span className="text-neutral/80">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <Button 
-                        className={`w-full py-6 ${
-                          plan.name === 'Elite Plan' 
-                            ? 'bg-blue-500 hover:bg-blue-500/90' 
-                            : 'bg-primary hover:bg-primary/90'
-                        } text-neutral font-montserrat font-medium transition-all`}
-                        onClick={() => handleSelectPlan(plan.id)}
-                      >
-                        Select Plan
-                      </Button>
-                    </CardContent>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-          </TabsContent>
-          
-          <TabsContent value="benefits">
-            <Card>
-              <CardHeader>
-                <CardTitle>Membership Benefits</CardTitle>
-                <CardDescription>
-                  Discover all the exclusive benefits included with your MAXIMUS membership
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="bg-dark p-6 rounded-lg border border-gray-800">
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                        <FaUserCheck className="text-primary text-xl" />
-                      </div>
-                      <h3 className="ml-4 text-xl font-montserrat font-semibold text-neutral">Personalized Experience</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Initial fitness assessment with professional trainers</span>
-                      </li>
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Customized workout plan based on your goals</span>
-                      </li>
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Regular progress tracking and plan adjustments</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-dark p-6 rounded-lg border border-gray-800">
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
-                        <FaChartLine className="text-blue-500 text-xl" />
-                      </div>
-                      <h3 className="ml-4 text-xl font-montserrat font-semibold text-neutral">Performance Tracking</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Access to our mobile app for tracking workouts</span>
-                      </li>
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Body composition analysis every month</span>
-                      </li>
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Fitness milestone celebrations and rewards</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-dark p-6 rounded-lg border border-gray-800">
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
-                        <FaHeart className="text-green-500 text-xl" />
-                      </div>
-                      <h3 className="ml-4 text-xl font-montserrat font-semibold text-neutral">Health & Recovery</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Access to sauna, steam room, and recovery areas</span>
-                      </li>
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Nutritional guidance and meal planning</span>
-                      </li>
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Discounts on massage therapy and recovery services</span>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="bg-dark p-6 rounded-lg border border-gray-800">
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                        <FaRunning className="text-primary text-xl" />
-                      </div>
-                      <h3 className="ml-4 text-xl font-montserrat font-semibold text-neutral">Classes & Community</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Access to group fitness classes (varies by plan)</span>
-                      </li>
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Monthly community fitness challenges</span>
-                      </li>
-                      <li className="flex items-start">
-                        <FaCheck className="text-green-500 mt-1 mr-3 flex-shrink-0" />
-                        <span className="text-neutral/80">Exclusive member events and workshops</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <p className="text-sm text-neutral/70">
-                  Benefits may vary based on the membership plan selected. Elite members receive all benefits listed above.
-                </p>
-              </CardFooter>
-            </Card>
-          </TabsContent>
-        </Tabs>
-
+                    Select Plan
+                  </Button>
+                </CardContent>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-dark rounded-xl p-8 max-w-3xl mx-auto text-neutral/90 text-lg shadow-lg border border-gray-800">
+            <h3 className="text-2xl font-montserrat font-bold mb-4 text-primary">Membership Benefits</h3>
+            <ul className="list-disc pl-6 space-y-3">
+              <li>Access to all gym equipment and facilities</li>
+              <li>Locker room and shower access</li>
+              <li>Group fitness classes</li>
+              <li>Personal trainer sessions (varies by plan)</li>
+              <li>Nutrition and wellness consultation</li>
+              <li>Priority and VIP support for Premium/Elite</li>
+              <li>Exclusive access to gym events</li>
+              <li>Discounts on merchandise and partner services</li>
+            </ul>
+          </div>
+        )}
         {/* FAQ Section */}
         <div className="mt-16">
           <h2 className="text-3xl font-montserrat font-bold text-neutral mb-8 text-center">
@@ -334,7 +295,7 @@ const Membership = () => {
             <div className="bg-dark p-6 rounded-lg border border-gray-800">
               <h3 className="text-xl font-montserrat font-semibold text-neutral mb-3">Is there a joining fee?</h3>
               <p className="text-neutral/80">
-                There is a one-time joining fee of $49 for Basic and Premium plans. This fee is waived for Elite plan members.
+                There is a one-time joining fee of ₹49 for Basic and Premium plans. This fee is waived for Elite plan members.
               </p>
             </div>
             <div className="bg-dark p-6 rounded-lg border border-gray-800">

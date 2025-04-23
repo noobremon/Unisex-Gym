@@ -11,7 +11,7 @@ const GymScene: React.FC = () => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-6 w-full max-w-xl mx-auto">
           {[
             { icon: FaDumbbell, label: "Strength" },
             { icon: FaRunning, label: "Cardio" },
@@ -20,7 +20,7 @@ const GymScene: React.FC = () => {
           ].map((item, index) => (
             <motion.div
               key={index}
-              className="bg-primary/10 p-4 rounded-lg"
+              className="bg-primary/10 p-4 sm:p-6 md:p-8 rounded-lg flex flex-col items-center justify-center min-w-[100px] sm:min-w-[120px] md:min-w-[140px] min-h-[100px] sm:min-h-[120px] md:min-h-[140px] shadow-md"
               animate={{ 
                 scale: [1, 1.05, 1],
                 rotate: [0, 5, 0, -5, 0] 
@@ -32,8 +32,8 @@ const GymScene: React.FC = () => {
                 ease: "easeInOut" 
               }}
             >
-              <item.icon className="text-primary text-3xl mx-auto mb-2" />
-            
+              <item.icon className="text-primary text-3xl sm:text-4xl md:text-5xl mx-auto mb-2" />
+              <span className="text-primary text-base sm:text-lg md:text-xl font-semibold">{item.label}</span>
             </motion.div>
           ))}
         </div>

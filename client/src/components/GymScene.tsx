@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaDumbbell, FaRunning, FaBiking, FaHeartbeat } from 'react-icons/fa';
@@ -34,12 +33,11 @@ const GymScene: React.FC = () => {
               }}
             >
               <item.icon className="text-primary text-3xl mx-auto mb-2" />
-              <p className="text-neutral/80 text-sm">{item.label}</p>
+            
             </motion.div>
           ))}
         </div>
-        <h3 className="text-xl md:text-2xl font-bebas text-primary tracking-wide mb-3">FLEXFIT GYM</h3>
-        <p className="text-neutral/80 mt-2 mb-4">Interactive 3D Gym View Loading...</p>
+        {/* Removed the heading and description text from the video section */}
         <div className="flex justify-center space-x-2">
           {[1, 2, 3].map((index) => (
             <motion.div

@@ -1,46 +1,51 @@
-import { useQuery } from '@tanstack/react-query';
 import { Trainer } from '@shared/schema';
 import { motion } from 'framer-motion';
 import { FaInstagram, FaFacebook, FaTwitter } from 'react-icons/fa';
 
 const TrainerSection = () => {
-  const { data: trainers = [], isLoading, error } = useQuery<Trainer[]>({
-    queryKey: ['/api/trainers'],
-  });
+  // --- MOCK DATA ---
+  const mockTrainers = [
+    {
+      id: 1,
+      name: 'Alex Turner',
+      speciality: 'HIIT',
+      image: 'trainer1.jpg',
+      instagram: 'alexturner',
+      facebook: 'alexturner',
+      twitter: 'alexturner',
+    },
+    {
+      id: 2,
+      name: 'Sara Lee',
+      speciality: 'Yoga',
+      image: 'trainer2.jpg',
+      instagram: 'saralee',
+      facebook: 'saralee',
+      twitter: 'saralee',
+    },
+    {
+      id: 3,
+      name: 'Mike Chen',
+      speciality: 'Strength',
+      image: 'trainer3.jpg',
+      instagram: 'mikechen',
+      facebook: 'mikechen',
+      twitter: 'mikechen',
+    },
+    {
+      id: 4,
+      name: 'Lily Evans',
+      speciality: 'Cardio',
+      image: 'trainer4.jpg',
+      instagram: 'lilyevans',
+      facebook: 'lilyevans',
+      twitter: 'lilyevans',
+    },
+  ];
 
-  if (isLoading) {
-    return (
-      <section id="trainers" className="py-20 bg-dark">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
-              Expert <span className="text-primary">Trainers</span>
-            </h2>
-            <p className="text-neutral/80 max-w-2xl mx-auto">
-              Loading trainers...
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="trainers" className="py-20 bg-dark">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
-              Expert <span className="text-primary">Trainers</span>
-            </h2>
-            <p className="text-red-500 max-w-2xl mx-auto">
-              Error loading trainers. Please try again later.
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const trainers = mockTrainers;
+  const isLoading = false;
+  const error = false;
 
   return (
     <section id="trainers" className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">

@@ -9,6 +9,7 @@ import Membership from "@/pages/membership";
 import Trainers from "@/pages/trainers";
 import Facilities from "@/pages/facilities";
 import Contact from "@/pages/contact";
+import ClassesPage from "@/pages/classes";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/trainers" component={Trainers} />
       <Route path="/facilities" component={Facilities} />
       <Route path="/contact" component={Contact} />
+      <Route path="/classes" component={ClassesPage} />
       <Route component={NotFound} />
     </Switch>
   );

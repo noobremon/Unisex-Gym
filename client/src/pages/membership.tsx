@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { MembershipPlan } from '@shared/schema';
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from '@/lib/queryClient';
@@ -24,9 +24,55 @@ const Membership = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { data: membershipPlans = [], isLoading, error } = useQuery<MembershipPlan[]>({
-    queryKey: ['/api/membership-plans'],
-  });
+  // --- MOCK DATA ---
+  const mockMembershipPlans = [
+    {
+      id: 1,
+      name: 'Basic Plan',
+      price: 29,
+      features: [
+        'Access to gym equipment',
+        'Locker room access',
+        '1 group class per week',
+        'Standard support',
+        'No personal trainer',
+      ],
+      icon: 'fa-dumbbell',
+      popular: false,
+    },
+    {
+      id: 2,
+      name: 'Premium Plan',
+      price: 59,
+      features: [
+        'All Basic features',
+        'Unlimited group classes',
+        'Sauna access',
+        'Priority support',
+        '5 personal trainer sessions',
+      ],
+      icon: 'fa-crown',
+      popular: true,
+    },
+    {
+      id: 3,
+      name: 'Elite Plan',
+      price: 99,
+      features: [
+        'All Premium features',
+        'Private locker',
+        'Nutrition consultation',
+        'Unlimited personal trainer',
+        'VIP events',
+      ],
+      icon: 'fa-gem',
+      popular: false,
+    },
+  ];
+
+  const membershipPlans = mockMembershipPlans;
+  const isLoading = false;
+  const error = false;
 
   const handleSelectPlan = async (planId: number) => {
     try {

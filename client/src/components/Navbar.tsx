@@ -22,7 +22,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Membership", href: "/membership" },
-    { name: "Classes", href: "/booking" },
+    { name: "Classes", href: "/classes" },
     { name: "Trainers", href: "/trainers" },
     { name: "Facilities", href: "/facilities" },
     { name: "Contact", href: "/contact" },

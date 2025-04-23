@@ -15,7 +15,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactMessageSchema, InsertContactMessage } from '@shared/schema';
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from '@/lib/queryClient';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaInstagram, FaFacebook, FaTwitter, FaYoutube } from 'react-icons/fa';
 
@@ -33,10 +32,12 @@ const ContactSection = () => {
     }
   });
 
+  // --- MOCK SUBMIT ---
+  const mockSubmit = (data: any) =>
+    new Promise((resolve) => setTimeout(resolve, 1000));
+
   const contactMutation = useMutation({
-    mutationFn: (data: InsertContactMessage) => {
-      return apiRequest('POST', '/api/contact', data);
-    },
+    mutationFn: mockSubmit,
     onSuccess: () => {
       toast({
         title: 'Message sent!',

@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { MembershipPlan } from '@shared/schema';
@@ -10,9 +9,55 @@ import { FaDumbbell, FaCrown, FaGem, FaCheck, FaTimes } from 'react-icons/fa';
 const MembershipPlans = () => {
   const { toast } = useToast();
 
-  const { data: membershipPlans = [], isLoading, error } = useQuery<MembershipPlan[]>({
-    queryKey: ['/api/membership-plans'],
-  });
+  // --- MOCK DATA ---
+  const mockMembershipPlans = [
+    {
+      id: 1,
+      name: 'Basic Plan',
+      price: 29,
+      features: [
+        'Access to gym equipment',
+        'Locker room access',
+        '1 group class per week',
+        'Standard support',
+        'No personal trainer',
+      ],
+      icon: 'fa-dumbbell',
+      popular: false,
+    },
+    {
+      id: 2,
+      name: 'Premium Plan',
+      price: 59,
+      features: [
+        'All Basic features',
+        'Unlimited group classes',
+        'Sauna access',
+        'Priority support',
+        '5 personal trainer sessions',
+      ],
+      icon: 'fa-crown',
+      popular: true,
+    },
+    {
+      id: 3,
+      name: 'Elite Plan',
+      price: 99,
+      features: [
+        'All Premium features',
+        'Private locker',
+        'Nutrition consultation',
+        'Unlimited personal trainer',
+        'VIP events',
+      ],
+      icon: 'fa-gem',
+      popular: false,
+    },
+  ];
+
+  const membershipPlans = mockMembershipPlans;
+  const isLoading = false;
+  const error = false;
 
   const handleSelectPlan = async (planId: number) => {
     try {
@@ -49,40 +94,6 @@ const MembershipPlans = () => {
         return <FaDumbbell className="text-primary text-2xl" />;
     }
   };
-
-  if (isLoading) {
-    return (
-      <section id="membership" className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
-              Membership <span className="text-primary">Plans</span>
-            </h2>
-            <p className="text-neutral/80 max-w-2xl mx-auto">
-              Loading membership plans...
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="membership" className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
-              Membership <span className="text-primary">Plans</span>
-            </h2>
-            <p className="text-red-500 max-w-2xl mx-auto">
-              Error loading membership plans. Please try again later.
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="membership" className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">

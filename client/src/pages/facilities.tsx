@@ -1,50 +1,33 @@
-import { useQuery } from "@tanstack/react-query";
 import { Facility } from "@shared/schema";
 import { motion } from "framer-motion";
 import { FaPlay } from "react-icons/fa";
 
 const FacilitySection = () => {
-  const {
-    data: facilities = [],
-    isLoading,
-    error,
-  } = useQuery<Facility[]>({
-    queryKey: ["/api/facilities"],
-  });
+  // --- MOCK DATA ---
+  const mockFacilities = [
+    {
+      id: 1,
+      name: 'Cardio Zone',
+      image: 'https://images.unsplash.com/photo-1517960413843-0aee8e2d471c?auto=format&fit=crop&w=400&q=80',
+      description: 'A full range of treadmills, bikes, and ellipticals.',
+    },
+    {
+      id: 2,
+      name: 'Strength Area',
+      image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=400&q=80',
+      description: 'Dumbbells, barbells, and resistance machines.',
+    },
+    {
+      id: 3,
+      name: 'Yoga Studio',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
+      description: 'A quiet, relaxing space for yoga and meditation.',
+    },
+  ];
 
-  if (isLoading) {
-    return (
-      <section id="facilities" className="py-20 bg-[#0c0c0c]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
-              Our <span className="text-primary">Facilities</span>
-            </h2>
-            <p className="text-neutral/80 max-w-2xl mx-auto">
-              Loading facilities...
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="facilities" className="py-20 bg-[#0c0c0c]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
-              Our <span className="text-primary">Facilities</span>
-            </h2>
-            <p className="text-red-500 max-w-2xl mx-auto">
-              Error loading facilities. Please try again later.
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const facilities = mockFacilities;
+  const isLoading = false;
+  const error = false;
 
   return (
     <section
@@ -98,6 +81,20 @@ const FacilitySection = () => {
           className="relative rounded-xl overflow-hidden shadow-2xl"
         >
           <div className="aspect-w-16 aspect-h-9 relative">
+            {/* Catchy text in top left corner */}
+            <div className="absolute top-4 left-6 z-20">
+              <span style={{
+                background: 'rgba(255,255,255,0.85)',
+                color: 'black',
+                fontWeight: 700,
+                fontSize: '1.35rem',
+                padding: '0.5rem 1.25rem',
+                borderRadius: '0.6rem',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.06)'
+              }}>
+                Explore the Experience
+              </span>
+            </div>
             <img
               src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&h=675&q=80"
               alt="Gym Interior"
@@ -112,15 +109,6 @@ const FacilitySection = () => {
                 <FaPlay className="text-neutral text-2xl" />
               </motion.button>
             </div>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-dark to-transparent">
-            <h3 className="text-2xl font-montserrat font-bold text-neutral mb-2">
-              Take a 3D Tour of Our Gym
-            </h3>
-            <p className="text-neutral/80">
-              Explore our state-of-the-art facilities in an immersive virtual
-              tour.
-            </p>
           </div>
         </motion.div>
       </div>

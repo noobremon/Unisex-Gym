@@ -1,199 +1,84 @@
-import { pgTable, text, serial, integer, timestamp, boolean } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
-  name: text("name").notNull(),
-  email: text("email").notNull()
+// --- MEMBERSHIP PLAN ---
+export const membershipPlanSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  price: z.number(),
+  features: z.string().array(),
+  icon: z.string(),
+  popular: z.boolean().optional(),
 });
+export type MembershipPlan = z.infer<typeof membershipPlanSchema>;
 
-export const membershipPlans = pgTable("membership_plans", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  price: integer("price").notNull(),
-  description: text("description").notNull(),
-  features: text("features").array().notNull(),
-  icon: text("icon").notNull(),
-  popular: boolean("popular").default(false)
+// --- GYM CLASS ---
+export const gymClassSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  image: z.string(),
+  description: z.string(),
+  level: z.string(),
+  duration: z.number(),
+  rating: z.number(),
+  category: z.string().optional(),
+  price: z.number().optional(),
 });
+export type GymClass = z.infer<typeof gymClassSchema>;
 
-export const trainers = pgTable("trainers", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  speciality: text("speciality").notNull(),
-  image: text("image").notNull(),
-  instagram: text("instagram"),
-  facebook: text("facebook"),
-  twitter: text("twitter")
+// --- CLASS SCHEDULE ---
+export const classScheduleSchema = z.object({
+  id: z.number(),
+  classId: z.number(),
+  trainerId: z.number(),
+  day: z.string(),
+  startTime: z.string(),
+  endTime: z.string(),
+  booked: z.number(),
+  capacity: z.number(),
 });
+export type ClassSchedule = z.infer<typeof classScheduleSchema>;
 
-export const gymClasses = pgTable("gym_classes", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(), 
-  duration: integer("duration").notNull(),
-  image: text("image").notNull(),
-  category: text("category").notNull(),
-  price: integer("price").notNull(),
-  trainerId: integer("trainer_id").notNull()
+// --- TRAINER ---
+export const trainerSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  speciality: z.string(),
+  image: z.string(),
+  instagram: z.string().optional(),
+  facebook: z.string().optional(),
+  twitter: z.string().optional(),
 });
+export type Trainer = z.infer<typeof trainerSchema>;
 
-export const classSchedules = pgTable("class_schedules", {
-  id: serial("id").primaryKey(),
-  classId: integer("class_id").notNull(),
-  dayOfWeek: text("day_of_week").notNull(),
-  startTime: text("start_time").notNull(),
-  endTime: text("end_time").notNull(),
-  capacity: integer("capacity").notNull(),
-  booked: integer("booked").default(0)
+// --- FACILITY ---
+export const facilitySchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  image: z.string(),
+  description: z.string(),
 });
+export type Facility = z.infer<typeof facilitySchema>;
 
-export const facilities = pgTable("facilities", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  image: text("image").notNull()
+// --- TESTIMONIAL ---
+export const testimonialSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  image: z.string(),
+  testimonial: z.string(),
+  rating: z.number(),
+  achievement: z.string(),
+  duration: z.string(),
 });
+export type Testimonial = z.infer<typeof testimonialSchema>;
 
-export const testimonials = pgTable("testimonials", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  image: text("image").notNull(),
-  testimonial: text("testimonial").notNull(),
-  achievement: text("achievement").notNull(),
-  rating: integer("rating").notNull(),
-  duration: text("duration").notNull()
+// --- CONTACT MESSAGE ---
+export const contactMessageSchema = z.object({
+  id: z.number().optional(),
+  name: z.string().min(2, 'Name is required'),
+  email: z.string().email('Invalid email'),
+  subject: z.string().min(5, 'Subject is required'),
+  message: z.string().min(10, 'Message should be at least 10 characters'),
+  createdAt: z.date().optional()
 });
-
-export const bookings = pgTable("bookings", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
-  scheduleId: integer("schedule_id").notNull(),
-  bookingDate: timestamp("booking_date").notNull(),
-  status: text("status").notNull()
-});
-
-export const membershipRegistrations = pgTable("membership_registrations", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
-  planId: integer("plan_id").notNull(),
-  startDate: timestamp("start_date").notNull(),
-  endDate: timestamp("end_date"),
-  status: text("status").notNull()
-});
-
-export const contactMessages = pgTable("contact_messages", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  subject: text("subject").notNull(),
-  message: text("message").notNull(),
-  createdAt: timestamp("created_at").notNull()
-});
-
-// Insert schemas for all tables
-export const insertUserSchema = createInsertSchema(users).omit({ id: true });
-export const insertMembershipPlanSchema = createInsertSchema(membershipPlans).omit({ id: true });
-export const insertTrainerSchema = createInsertSchema(trainers).omit({ id: true });
-export const insertGymClassSchema = createInsertSchema(gymClasses).omit({ id: true });
-export const insertClassScheduleSchema = createInsertSchema(classSchedules).omit({ id: true });
-export const insertFacilitySchema = createInsertSchema(facilities).omit({ id: true });
-export const insertTestimonialSchema = createInsertSchema(testimonials).omit({ id: true });
-export const insertBookingSchema = createInsertSchema(bookings).omit({ id: true });
-export const insertMembershipRegistrationSchema = createInsertSchema(membershipRegistrations).omit({ id: true });
-export const insertContactMessageSchema = createInsertSchema(contactMessages).omit({ id: true, createdAt: true });
-
-// Insert types for all tables
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type InsertMembershipPlan = z.infer<typeof insertMembershipPlanSchema>;
-export type InsertTrainer = z.infer<typeof insertTrainerSchema>;
-export type InsertGymClass = z.infer<typeof insertGymClassSchema>;
-export type InsertClassSchedule = z.infer<typeof insertClassScheduleSchema>;
-export type InsertFacility = z.infer<typeof insertFacilitySchema>;
-export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
-export type InsertBooking = z.infer<typeof insertBookingSchema>;
-export type InsertMembershipRegistration = z.infer<typeof insertMembershipRegistrationSchema>;
-export type InsertContactMessage = z.infer<typeof insertContactMessageSchema>;
-
-// Select types for all tables
-export type User = typeof users.$inferSelect;
-export type MembershipPlan = typeof membershipPlans.$inferSelect;
-export type Trainer = typeof trainers.$inferSelect;
-export type GymClass = typeof gymClasses.$inferSelect;
-export type ClassSchedule = typeof classSchedules.$inferSelect;
-export type Facility = typeof facilities.$inferSelect;
-export type Testimonial = typeof testimonials.$inferSelect;
-export type Booking = typeof bookings.$inferSelect;
-export type MembershipRegistration = typeof membershipRegistrations.$inferSelect;
-export type ContactMessage = typeof contactMessages.$inferSelect;
-
-// Extended schemas for API validation
-export const contactMessageSchema = insertContactMessageSchema.extend({
-  createdAt: z.date().optional(),
-});
-
-export const bookClassSchema = z.object({
-  userId: z.number(),
-  scheduleId: z.number()
-});
-
-export const registerMembershipSchema = z.object({
-  userId: z.number(),
-  planId: z.number()
-});
-
-// Define table relations
-export const usersRelations = relations(users, ({ many }) => ({
-  bookings: many(bookings),
-  membershipRegistrations: many(membershipRegistrations)
-}));
-
-export const membershipPlansRelations = relations(membershipPlans, ({ many }) => ({
-  registrations: many(membershipRegistrations)
-}));
-
-export const trainersRelations = relations(trainers, ({ many }) => ({
-  classes: many(gymClasses)
-}));
-
-export const gymClassesRelations = relations(gymClasses, ({ one, many }) => ({
-  trainer: one(trainers, {
-    fields: [gymClasses.trainerId],
-    references: [trainers.id]
-  }),
-  schedules: many(classSchedules)
-}));
-
-export const classSchedulesRelations = relations(classSchedules, ({ one, many }) => ({
-  class: one(gymClasses, {
-    fields: [classSchedules.classId],
-    references: [gymClasses.id]
-  }),
-  bookings: many(bookings)
-}));
-
-export const bookingsRelations = relations(bookings, ({ one }) => ({
-  user: one(users, {
-    fields: [bookings.userId],
-    references: [users.id]
-  }),
-  schedule: one(classSchedules, {
-    fields: [bookings.scheduleId],
-    references: [classSchedules.id]
-  })
-}));
-
-export const membershipRegistrationsRelations = relations(membershipRegistrations, ({ one }) => ({
-  user: one(users, {
-    fields: [membershipRegistrations.userId],
-    references: [users.id]
-  }),
-  plan: one(membershipPlans, {
-    fields: [membershipRegistrations.planId],
-    references: [membershipPlans.id]
-  })
-}));
+export type ContactMessage = z.infer<typeof contactMessageSchema>;
+export type InsertContactMessage = Omit<ContactMessage, "id" | "createdAt">;

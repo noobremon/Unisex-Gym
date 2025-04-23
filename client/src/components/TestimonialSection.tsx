@@ -1,46 +1,42 @@
-import { useQuery } from '@tanstack/react-query';
 import { Testimonial } from '@shared/schema';
 import { motion } from 'framer-motion';
 import { FaStar } from 'react-icons/fa';
 
 const TestimonialSection = () => {
-  const { data: testimonials = [], isLoading, error } = useQuery<Testimonial[]>({
-    queryKey: ['/api/testimonials'],
-  });
+  // --- MOCK DATA ---
+  const mockTestimonials = [
+    {
+      id: 1,
+      name: 'Emily R.',
+      image: 'https://randomuser.me/api/portraits/women/44.jpg',
+      testimonial: 'Joining FlexFit Gym was the best decision I made for my health. The trainers are amazing!',
+      rating: 5,
+      achievement: 'Lost 20 lbs',
+      duration: '6 months',
+    },
+    {
+      id: 2,
+      name: 'Michael B.',
+      image: 'https://randomuser.me/api/portraits/men/32.jpg',
+      testimonial: 'Great environment and top-notch equipment. I love the variety of classes offered.',
+      rating: 4,
+      achievement: 'Gained muscle',
+      duration: '1 year',
+    },
+    {
+      id: 3,
+      name: 'Sophia L.',
+      image: 'https://randomuser.me/api/portraits/women/65.jpg',
+      testimonial: 'The community here keeps me motivated. I never miss a workout!',
+      rating: 5,
+      achievement: 'Improved stamina',
+      duration: '8 months',
+    },
+  ];
 
-  if (isLoading) {
-    return (
-      <section className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
-              Success <span className="text-primary">Stories</span>
-            </h2>
-            <p className="text-neutral/80 max-w-2xl mx-auto">
-              Loading testimonials...
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
-              Success <span className="text-primary">Stories</span>
-            </h2>
-            <p className="text-red-500 max-w-2xl mx-auto">
-              Error loading testimonials. Please try again later.
-            </p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const testimonials = mockTestimonials;
+  const isLoading = false;
+  const error = false;
 
   return (
     <section className="py-20 bg-[#0c0c0c] dark:bg-[#0c0c0c]">

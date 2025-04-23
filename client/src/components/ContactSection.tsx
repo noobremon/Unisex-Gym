@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,56 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from '@/lib/queryClient';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaInstagram, FaFacebook, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { MapContainer, TileLayer, Marker, Popup, Circle, ScaleControl, ZoomControl, useMap, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import gymIconUrl from '@/assets/gym-icon.svg';
+
+// Fix default marker icon for leaflet in React (required workaround):
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
+// Custom Gym Icon
+const gymIcon = new L.Icon({
+  iconUrl: gymIconUrl,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -36],
+});
+
+// User Location Marker Component
+const UserLocationMarker = () => {
+  const [position, setPosition] = useState<L.LatLng | null>(null);
+  const [accuracy, setAccuracy] = useState(0);
+  useMapEvents({
+    locationfound(e) {
+      setPosition(e.latlng);
+      setAccuracy(e.accuracy);
+    },
+    locationerror() {
+      setPosition(null);
+    }
+  });
+  const map = useMap();
+  useEffect(() => {
+    map.locate({ setView: false, watch: false });
+  }, [map]);
+  return position ? (
+    <>
+      <Marker position={position}>
+        <Popup>You are here</Popup>
+      </Marker>
+      <Circle center={position} radius={accuracy} pathOptions={{ color: 'green', fillColor: '#22c55e', fillOpacity: 0.2 }} />
+    </>
+  ) : null;
+};
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -229,21 +279,55 @@ const ContactSection = () => {
 
             {/* Map */}
             <div className="bg-dark rounded-xl overflow-hidden shadow-xl border border-gray-800 h-72">
-              <div className="h-full w-full bg-secondary relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1569336415962-a4bd9f69c8bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&h=400&q=80" 
-                  alt="Map location" 
-                  className="w-full h-full object-cover opacity-50"
+              <MapContainer
+                center={[22.622801279456, 88.41037137507931]}
+                zoom={17}
+                style={{ width: '100%', height: '100%' }}
+                scrollWheelZoom={true}
+              >
+                <TileLayer
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-primary flex items-center justify-center animate-bounce">
-                      <FaMapMarkerAlt className="text-neutral text-xl" />
+                {/* Main Gym Marker with Custom Icon and Directions Button */}
+                <Marker position={[22.622801279456, 88.41037137507931]} icon={gymIcon}>
+                  <Popup>
+                    <div style={{ textAlign: 'center' }}>
+                      <b>MAXIMUS FITNESS HUB</b><br />
+                      Dum Dum Road, Kolkata - 700074<br />
+                      <a href="https://goo.gl/maps/4V2jVw8u4W7wF3pF9" target="_blank" rel="noopener noreferrer">View on Google Maps</a>
+                      <br />
+                      <a href={`https://www.google.com/maps/dir/?api=1&destination=22.622801279456,88.41037137507931`} target="_blank" rel="noopener noreferrer" style={{ color: '#3b82f6', fontWeight: 'bold' }}>Get Directions</a>
                     </div>
-                    <p className="text-neutral font-medium">We are here!</p>
-                  </div>
-                </div>
-              </div>
+                  </Popup>
+                </Marker>
+                {/* Circle highlighting gym area */}
+                <Circle
+                  center={[22.622801279456, 88.41037137507931]}
+                  radius={70}
+                  pathOptions={{ color: 'blue', fillColor: '#3b82f6', fillOpacity: 0.2 }}
+                />
+                {/* Nearby Metro Station Marker */}
+                <Marker position={[22.6265, 88.4112]}>
+                  <Popup>
+                    Dum Dum Metro Station<br />
+                    <a href="https://goo.gl/maps/6yq8u3p4t7P2" target="_blank" rel="noopener noreferrer">Directions</a>
+                  </Popup>
+                </Marker>
+                {/* Parking Landmark */}
+                <Marker position={[22.6238, 88.4092]}>
+                  <Popup>
+                    Public Parking<br />
+                    <a href="https://goo.gl/maps/7Xn7G2R2T8y" target="_blank" rel="noopener noreferrer">Directions</a>
+                  </Popup>
+                </Marker>
+                {/* User Location Marker */}
+                <UserLocationMarker />
+                {/* Scale Bar */}
+                <ScaleControl position="bottomleft" />
+                {/* Zoom Control repositioned */}
+                <ZoomControl position="topright" />
+              </MapContainer>
             </div>
           </motion.div>
         </div>

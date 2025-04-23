@@ -3,7 +3,6 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { FaDumbbell } from "react-icons/fa";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -97,7 +96,6 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <ThemeToggle />
             <Button
               variant="default"
               className="bg-primary hover:bg-primary/90 text-white ml-4"
@@ -108,7 +106,6 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-neutral hover:text-primary focus:outline-none"

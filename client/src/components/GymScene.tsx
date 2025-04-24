@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaDumbbell, FaRunning, FaBiking, FaHeartbeat } from 'react-icons/fa';
+import { FaRunning, FaBiking, FaHeartbeat, FaWeightHanging } from 'react-icons/fa';
 
 const GymScene: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const GymScene: React.FC = () => {
       >
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mb-6 w-full max-w-xl mx-auto">
           {[
-            { icon: FaDumbbell, label: "Strength" },
+            { icon: FaWeightHanging, label: "Strength" },
             { icon: FaRunning, label: "Cardio" },
             { icon: FaBiking, label: "Cycling" },
             { icon: FaHeartbeat, label: "Fitness" }

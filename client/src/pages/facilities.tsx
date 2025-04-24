@@ -92,7 +92,7 @@ const FacilitySection = () => {
                 borderRadius: '0.6rem',
                 boxShadow: '0 2px 12px rgba(0,0,0,0.06)'
               }}>
-                Explore the Experience
+                Explore Our Gym
               </span>
             </div>
             <img

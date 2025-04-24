@@ -73,6 +73,12 @@ const FacilitySection = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="relative rounded-xl overflow-hidden shadow-2xl"
         >
+          {/* Top left overlay text */}
+          <div className="absolute top-0 left-0 m-4 z-20">
+            <span className="bg-primary text-white font-bold px-4 py-2 rounded-lg shadow-lg text-lg opacity-90">
+              Explore Our Gym
+            </span>
+          </div>
           <div className="aspect-w-16 aspect-h-9 relative">
             <img 
               src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&h=675&q=80" 

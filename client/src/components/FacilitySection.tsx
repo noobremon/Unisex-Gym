@@ -7,7 +7,7 @@ const FacilitySection = () => {
     {
       id: 1,
       name: 'Cardio Zone',
-      image: 'https://images.unsplash.com/photo-1517960413843-0aee8e2d471c?auto=format&fit=crop&w=400&q=80',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
       description: 'A full range of treadmills, bikes, and ellipticals.',
     },
     {

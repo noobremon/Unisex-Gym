@@ -9,7 +9,7 @@ const TrainerSection = () => {
       id: 1,
       name: 'Alex Turner',
       speciality: 'HIIT',
-      image: 'trainer1.jpg',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
       instagram: 'alexturner',
       facebook: 'alexturner',
       twitter: 'alexturner',
@@ -18,7 +18,7 @@ const TrainerSection = () => {
       id: 2,
       name: 'Sara Lee',
       speciality: 'Yoga',
-      image: 'trainer2.jpg',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
       instagram: 'saralee',
       facebook: 'saralee',
       twitter: 'saralee',
@@ -27,7 +27,7 @@ const TrainerSection = () => {
       id: 3,
       name: 'Mike Chen',
       speciality: 'Strength',
-      image: 'trainer3.jpg',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
       instagram: 'mikechen',
       facebook: 'mikechen',
       twitter: 'mikechen',
@@ -36,7 +36,7 @@ const TrainerSection = () => {
       id: 4,
       name: 'Lily Evans',
       speciality: 'Cardio',
-      image: 'trainer4.jpg',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
       instagram: 'lilyevans',
       facebook: 'lilyevans',
       twitter: 'lilyevans',
@@ -70,7 +70,7 @@ const TrainerSection = () => {
             >
               <div className="relative h-80">
                 <img
-                  src={`/images/${trainer.image}`}
+                  src={trainer.image}
                   alt={`${trainer.name} - ${trainer.speciality}`}
                   className="w-full h-full object-cover"
                 />

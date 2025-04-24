@@ -20,7 +20,7 @@ const ClassSection = () => {
     {
       id: 1,
       name: 'HIIT Blast',
-      image: 'https://images.unsplash.com/photo-1517960413843-0aee8e2d471c?auto=format&fit=crop&w=400&q=80',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
       description: 'High-intensity interval training for all levels.',
       level: 'All Levels',
       duration: 45,
@@ -53,7 +53,7 @@ const ClassSection = () => {
     {
       id: 4,
       name: 'Cardio Burn',
-      image: 'https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=400&q=80',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
       description: 'Burn calories with fast-paced cardio routines.',
       level: 'All Levels',
       duration: 40,
@@ -64,7 +64,7 @@ const ClassSection = () => {
     {
       id: 5,
       name: 'Pilates Core',
-      image: 'https://images.unsplash.com/photo-1526401485004-2c2e4e83b6a4?auto=format&fit=crop&w=400&q=80',
+      image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80',
       description: 'Strengthen your core and improve flexibility.',
       level: 'Beginner',
       duration: 55,

@@ -26,19 +26,18 @@ const GymScene: React.FC = () => {
   const [selected, setSelected] = useState<string | null>(null);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [showOptionsExpanded, setShowOptionsExpanded] = useState(true);
+  const [pendingSelection, setPendingSelection] = useState<string | null>(null);
 
-  // When going back, fade out images, then expand options
   useEffect(() => {
     if (isFadingOut) {
       const timeout = setTimeout(() => {
-        setSelected(null);
+        setSelected(pendingSelection);
         setIsFadingOut(false);
         setShowOptionsExpanded(true);
-        // After options have expanded, keep them in expanded state
       }, 500); // match duration of exit animation
       return () => clearTimeout(timeout);
     }
-  }, [isFadingOut]);
+  }, [isFadingOut, pendingSelection]);
 
   // When options are expanded and no option is selected, reset to initial state after a short delay
   useEffect(() => {
@@ -82,7 +81,9 @@ const GymScene: React.FC = () => {
               whileHover={!selected ? { scale: 1.08 } : {}}
               animate={!selected ? { scale: 1 } : {}}
               onClick={() => {
-                if (selected === item.label) {
+                if (selected) {
+                  // If already selected, always fade out images before switching
+                  setPendingSelection(selected === item.label ? null : item.label);
                   setIsFadingOut(true);
                 } else {
                   setSelected(item.label);

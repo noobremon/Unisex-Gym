@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import emailjs from 'emailjs-com';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -107,22 +107,26 @@ const ContactSection = () => {
     }
   });
 
-  const apiRequest = async (method: string, url: string, data?: any) => {
-    const response = await fetch(url, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: data ? JSON.stringify(data) : undefined,
-    });
-    return response.json();
-  };
+  // EmailJS config - use your actual IDs from EmailJS dashboard
+  const EMAILJS_SERVICE_ID = 'service_3dctakv';
+  const EMAILJS_TEMPLATE_ID = 'template_6xkppf9';
+  const EMAILJS_USER_ID = 'chl9UUEBs8MhFKeXC';
 
-  const contactMutation = useMutation({
-    mutationFn: (data: InsertContactMessage) => {
-      return apiRequest('POST', 'http://localhost:5000/api/contact', data);
-    },
-    onSuccess: () => {
+  const onSubmit = (data: InsertContactMessage) => {
+    setIsSubmitting(true);
+    emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name: data.name,
+        from_email: data.email,
+        subject: data.subject,
+        message: data.message,
+        to_email: 'rajarshidas729@gmail.com', // Ensures message is sent to this address
+      },
+      EMAILJS_USER_ID
+    )
+    .then(() => {
       toast({
         title: 'Message sent!',
         description: 'We will get back to you soon.',
@@ -130,20 +134,15 @@ const ContactSection = () => {
       });
       form.reset();
       setIsSubmitting(false);
-    },
-    onError: () => {
+    })
+    .catch(() => {
       toast({
         title: 'Error',
         description: 'Failed to send message. Please try again.',
         variant: 'destructive',
       });
       setIsSubmitting(false);
-    }
-  });
-
-  const onSubmit = (data: InsertContactMessage) => {
-    setIsSubmitting(true);
-    contactMutation.mutate(data);
+    });
   };
 
   return (
@@ -370,5 +369,7 @@ const ContactSection = () => {
     </section>
   );
 };
+
+// Install emailjs-com if not already installed: npm install emailjs-com or yarn add emailjs-com
 
 export default ContactSection;

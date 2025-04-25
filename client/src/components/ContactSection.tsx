@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,7 +14,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactMessageSchema, InsertContactMessage } from '@shared/schema';
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from '@/lib/queryClient';
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaInstagram, FaFacebook, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { MapContainer, TileLayer, Marker, Popup, Circle, ScaleControl, ZoomControl, useMap, useMapEvents } from 'react-leaflet';
@@ -25,6 +23,7 @@ import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import gymIconUrl from '@/assets/gym-icon.svg';
+import emailjs from 'emailjs-com';
 
 // Fix default marker icon for leaflet in React (required workaround):
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -72,7 +71,7 @@ const UserLocationMarker = () => {
 const ContactSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const form = useForm<InsertContactMessage>({
     resolver: zodResolver(contactMessageSchema),
     defaultValues: {
@@ -82,12 +81,27 @@ const ContactSection = () => {
       message: ''
     }
   });
-  
-  const contactMutation = useMutation({
-    mutationFn: (data: InsertContactMessage) => {
-      return apiRequest('POST', 'http://localhost:5000/api/contact', data);
-    },
-    onSuccess: () => {
+
+  // EmailJS config - TODO: Replace with your actual IDs from EmailJS dashboard
+  const EMAILJS_SERVICE_ID = 'service_3dctakv';
+  const EMAILJS_TEMPLATE_ID = 'template_6xkppf9';
+  const EMAILJS_USER_ID = 'chl9UUEBs8MhFKeXC';
+
+  const onSubmit = (data: InsertContactMessage) => {
+    setIsSubmitting(true);
+    emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name: data.name,
+        from_email: data.email,
+        subject: data.subject,
+        message: data.message,
+        to_email: 'rajarshidas729@gmail.com', // Ensures message is sent to this address
+      },
+      EMAILJS_USER_ID
+    )
+    .then(() => {
       toast({
         title: 'Message sent!',
         description: 'We will get back to you soon.',
@@ -95,22 +109,17 @@ const ContactSection = () => {
       });
       form.reset();
       setIsSubmitting(false);
-    },
-    onError: () => {
+    })
+    .catch(() => {
       toast({
         title: 'Error',
         description: 'Failed to send message. Please try again.',
         variant: 'destructive',
       });
       setIsSubmitting(false);
-    }
-  });
-  
-  const onSubmit = (data: InsertContactMessage) => {
-    setIsSubmitting(true);
-    contactMutation.mutate(data);
+    });
   };
-  
+
   return (
     <section id="contact" className="py-20 bg-[#0c0c0c]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -336,4 +345,5 @@ const ContactSection = () => {
   );
 };
 
+// TODO: Install emailjs-com if not already installed: npm install emailjs-com or yarn add emailjs-com
 export default ContactSection;

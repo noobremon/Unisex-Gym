@@ -107,12 +107,21 @@ const ContactSection = () => {
     }
   });
 
-  // --- MOCK SUBMIT ---
-  const mockSubmit = (data: any) =>
-    new Promise((resolve) => setTimeout(resolve, 1000));
+  const apiRequest = async (method: string, url: string, data?: any) => {
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: data ? JSON.stringify(data) : undefined,
+    });
+    return response.json();
+  };
 
   const contactMutation = useMutation({
-    mutationFn: mockSubmit,
+    mutationFn: (data: InsertContactMessage) => {
+      return apiRequest('POST', 'http://localhost:5000/api/contact', data);
+    },
     onSuccess: () => {
       toast({
         title: 'Message sent!',

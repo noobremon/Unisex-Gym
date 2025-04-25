@@ -85,7 +85,7 @@ const ContactSection = () => {
   
   const contactMutation = useMutation({
     mutationFn: (data: InsertContactMessage) => {
-      return apiRequest('POST', '/api/contact', data);
+      return apiRequest('POST', 'http://localhost:5000/api/contact', data);
     },
     onSuccess: () => {
       toast({

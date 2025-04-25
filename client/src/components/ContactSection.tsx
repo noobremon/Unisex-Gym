@@ -244,7 +244,7 @@ const ContactSection = () => {
                   </div>
                   <div className="ml-4">
                     <p className="text-neutral font-medium">Email</p>
-                    <p className="text-neutral/80">rajuuuraju03@gmail.com</p>
+                    <p className="text-neutral/80">rajarshidas729@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">

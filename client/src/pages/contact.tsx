@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactMessageSchema, InsertContactMessage } from '@shared/schema';
 import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 import { motion } from 'framer-motion';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaInstagram, FaFacebook, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { MapContainer, TileLayer, Marker, Popup, Circle, ScaleControl, ZoomControl, useMap, useMapEvents } from 'react-leaflet';
@@ -148,6 +149,10 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-20 bg-[#0c0c0c]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Toaster for toast notifications */}
+        <div className="mb-8">
+          <Toaster />
+        </div>
         <div className="text-center mb-16">
           <h2 className="text-4xl font-montserrat font-bold text-neutral mb-4">
             Get In <span className="text-primary">Touch</span>
@@ -161,158 +166,10 @@ const ContactSection = () => {
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-dark rounded-xl p-8 shadow-xl border border-gray-800"
+            transition={{ duration: 0.7 }}
+            className="order-1 lg:order-1"
           >
-            <h3 className="text-2xl font-montserrat font-bold text-neutral mb-6">Send us a Message</h3>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-neutral/80">Name</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-neutral focus:outline-none focus:ring-2 focus:ring-primary" 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-neutral/80">Email</FormLabel>
-                        <FormControl>
-                          <Input 
-                            {...field} 
-                            type="email"
-                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-neutral focus:outline-none focus:ring-2 focus:ring-primary" 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="subject"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-neutral/80">Subject</FormLabel>
-                      <FormControl>
-                        <Input 
-                          {...field} 
-                          className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-neutral focus:outline-none focus:ring-2 focus:ring-primary" 
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-neutral/80">Message</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          {...field} 
-                          rows={4}
-                          className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-neutral focus:outline-none focus:ring-2 focus:ring-primary resize-none" 
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button 
-                  type="submit" 
-                  className="w-full bg-primary hover:bg-primary/90 text-white font-montserrat font-medium py-6"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
-                </Button>
-              </form>
-            </Form>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="bg-dark rounded-xl p-8 shadow-xl border border-gray-800 mb-8">
-              <h3 className="text-2xl font-montserrat font-bold text-neutral mb-6">Contact Information</h3>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <FaMapMarkerAlt className="text-primary" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-neutral font-medium">Address</p>
-                    <p className="text-neutral/80">Dum Dum Road, Opp - South Dumdum Municipality, Kolkata - 700074</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <FaPhone className="text-primary" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-neutral font-medium">Phone</p>
-                    <p className="text-neutral/80">6969696969</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <FaEnvelope className="text-primary" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-neutral font-medium">Email</p>
-                    <p className="text-neutral/80">rajuuuraju03@gmail.com.com</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <FaClock className="text-primary" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-neutral font-medium">Hours</p>
-                    <p className="text-neutral/80">Monday - Friday: 7:30am - 11pm</p>
-                    <p className="text-neutral/80">Saturday - Sunday: 8am - 10:30pm</p>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8">
-                <h4 className="text-neutral font-medium mb-4">Follow us</h4>
-                <div className="flex space-x-4">
-                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
-                    <FaFacebook />
-                  </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
-                    <FaInstagram />
-                  </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
-                    <FaTwitter />
-                  </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
-                    <FaYoutube />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Map */}
-            <div className="bg-dark rounded-xl overflow-hidden shadow-xl border border-gray-800 h-72">
+            <div className="bg-dark rounded-xl overflow-hidden shadow-xl border border-gray-800 h-72 mb-10">
               <MapContainer
                 center={[22.622801279456, 88.41037137507931]}
                 zoom={17}
@@ -362,6 +219,144 @@ const ContactSection = () => {
                 {/* Zoom Control repositioned */}
                 <ZoomControl position="topright" />
               </MapContainer>
+            </div>
+            {/* Contact Information Section - moved below the map */}
+            <div className="bg-[#181818] rounded-xl p-8 shadow-lg border border-gray-800">
+              <div className="flex items-center mb-6">
+                <FaMapMarkerAlt className="text-primary text-2xl mr-4" />
+                <div>
+                  <h4 className="text-neutral font-medium">Address</h4>
+                  <p className="text-neutral/80">Dum Dum Road, Opp - South Dumdum Municipality, Kolkata - 700074</p>
+                </div>
+              </div>
+              <div className="flex items-center mb-6">
+                <FaPhone className="text-primary text-2xl mr-4" />
+                <div>
+                  <h4 className="text-neutral font-medium">Phone</h4>
+                  <p className="text-neutral/80">6969696969</p>
+                </div>
+              </div>
+              <div className="flex items-center mb-6">
+                <FaEnvelope className="text-primary text-2xl mr-4" />
+                <div>
+                  <h4 className="text-neutral font-medium">Email</h4>
+                  <p className="text-neutral/80">rajarshidas729@gmail.com</p>
+                </div>
+              </div>
+              <div className="flex items-center mb-6">
+                <FaClock className="text-primary text-2xl mr-4" />
+                <div>
+                  <h4 className="text-neutral font-medium">Hours</h4>
+                  <p className="text-neutral/80">Monday - Friday: 7:30am - 11pm</p>
+                  <p className="text-neutral/80">Saturday - Sunday: 8am - 10:30pm</p>
+                </div>
+              </div>
+              <div className="mt-8">
+                <h4 className="text-neutral font-medium mb-4">Follow us</h4>
+                <div className="flex space-x-4">
+                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
+                    <FaFacebook />
+                  </a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
+                    <FaInstagram />
+                  </a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
+                    <FaTwitter />
+                  </a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
+                    <FaYoutube />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+          {/* Contact Form Section */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="bg-dark rounded-xl p-8 shadow-xl border border-gray-800">
+              <h3 className="text-2xl font-montserrat font-bold text-neutral mb-6">Send us a Message</h3>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-neutral/80">Name</FormLabel>
+                          <FormControl>
+                            <Input 
+                              {...field} 
+                              className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-neutral focus:outline-none focus:ring-2 focus:ring-primary" 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-neutral/80">Email</FormLabel>
+                          <FormControl>
+                            <Input 
+                              {...field} 
+                              type="email"
+                              className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-neutral focus:outline-none focus:ring-2 focus:ring-primary" 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-neutral/80">Subject</FormLabel>
+                        <FormControl>
+                          <Input 
+                            {...field} 
+                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-neutral focus:outline-none focus:ring-2 focus:ring-primary" 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-neutral/80">Message</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            {...field} 
+                            rows={4}
+                            className="w-full bg-secondary border border-gray-700 rounded-lg px-4 py-3 text-neutral focus:outline-none focus:ring-2 focus:ring-primary resize-none" 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-primary hover:bg-primary/90 text-white font-montserrat font-medium py-6"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </Button>
+                </form>
+              </Form>
             </div>
           </motion.div>
         </div>

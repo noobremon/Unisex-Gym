@@ -287,16 +287,16 @@ const ContactSection = () => {
               <div className="mt-8">
                 <h4 className="text-neutral font-medium mb-4">Follow us</h4>
                 <div className="flex space-x-4">
-                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-neutral transition-all">
+                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
                     <FaFacebook />
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-neutral transition-all">
+                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
                     <FaInstagram />
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-neutral transition-all">
+                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
                     <FaTwitter />
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-neutral transition-all">
+                  <a href="#" className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-black transition-all">
                     <FaYoutube />
                   </a>
                 </div>
